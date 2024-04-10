@@ -1,8 +1,6 @@
-package com.example.OnlineCodingEvaluationPlatform.teacher;
+package com.example.OnlineCodingEvaluationPlatform.Classes;
 
 import java.util.List;
-
-import com.example.OnlineCodingEvaluationPlatform.user.User;
 
 import jakarta.persistence.Entity;
 

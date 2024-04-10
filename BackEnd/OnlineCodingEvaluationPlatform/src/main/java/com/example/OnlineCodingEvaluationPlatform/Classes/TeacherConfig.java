@@ -1,10 +1,12 @@
-package com.example.OnlineCodingEvaluationPlatform.teacher;
+package com.example.OnlineCodingEvaluationPlatform.Classes;
 
 import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.example.OnlineCodingEvaluationPlatform.Repository.TeacherRepository;
 
 
 @Configuration

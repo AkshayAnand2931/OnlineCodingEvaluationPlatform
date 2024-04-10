@@ -1,4 +1,4 @@
-package com.example.OnlineCodingEvaluationPlatform.user;
+package com.example.OnlineCodingEvaluationPlatform.Classes;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

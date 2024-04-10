@@ -1,9 +1,12 @@
-package com.example.OnlineCodingEvaluationPlatform.teacher;
+package com.example.OnlineCodingEvaluationPlatform.Service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.OnlineCodingEvaluationPlatform.Classes.Teacher;
+import com.example.OnlineCodingEvaluationPlatform.Repository.TeacherRepository;
 
 @Service
 public class TeacherService {
