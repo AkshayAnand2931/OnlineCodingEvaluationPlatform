@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to GFG</title>
+  <link rel="stylesheet" th:href="@{/css/index.css}" />
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome to GFG</h2>
+    <h3>Choose Your Role</h3>
+    <form action="/index" method="POST" onsubmit="return validateForm()">
+      <div class="role-options">
+        <div class="role-option">
+          <input type="radio" id="student" name="role" value="studentlogin">
+          <label for="student">Student</label>
+        </div>
+        <div class="role-option">
+          <input type="radio" id="teacher" name="role" value="teacherlogin">
+          <label for="teacher">Teacher</label>
+        </div>
+      </div>
+      <button type="submit" class="submit-button">Submit</button>
+    </form>
+    <p id="error-message" style="color: red; display: none;">Please select a role</p>   
+  </div>
+
+  <script>
+    function validateForm() {
+      var studentChecked = document.getElementById("student").checked;
+      var teacherChecked = document.getElementById("teacher").checked;
+
+      if (!studentChecked && !teacherChecked) {
+        document.getElementById("error-message").style.display = "block";
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>
+
+

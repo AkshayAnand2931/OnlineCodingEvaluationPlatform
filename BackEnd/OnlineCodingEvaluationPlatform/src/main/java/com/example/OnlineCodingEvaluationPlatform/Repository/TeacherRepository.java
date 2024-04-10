@@ -7,5 +7,5 @@ import com.example.OnlineCodingEvaluationPlatform.Classes.Teacher;
 
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher,Long>{
-
+    Teacher findByUsername(String username);
 }

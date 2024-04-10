@@ -26,4 +26,10 @@ public class TeacherService {
 	public void addTeacher(Teacher teacher){
 		teacherRepository.save(teacher);
 	}
+
+
+	public Teacher findByUsername(String username) {
+		Teacher teacher = teacherRepository.findByUsername(username);
+		return teacher;
+	}
 }
