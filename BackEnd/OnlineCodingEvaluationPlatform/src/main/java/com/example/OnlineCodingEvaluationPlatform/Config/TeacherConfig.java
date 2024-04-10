@@ -1,4 +1,4 @@
-package com.example.Config;
+package com.example.OnlineCodingEvaluationPlatform.Config;
 
 import java.util.List;
 
