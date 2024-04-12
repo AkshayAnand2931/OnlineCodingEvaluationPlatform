@@ -8,12 +8,8 @@ import jakarta.persistence.Entity;
 
 @Entity
 public class Teacher extends User{
-    
-    
 
     private List<Long> competitions_hosted;
-
-    
 
     public Teacher() {
         super();
@@ -36,10 +32,5 @@ public class Teacher extends User{
     public String toString() {
         return "Teacher [id=" + getId() + ", username=" + getUsername() + ", password=" + getPassword() + ", email_id=" + getEmail_id() + ", competitions_hosted=" + competitions_hosted + "]";
     }
-
-
-    
-    
-
     
 }
