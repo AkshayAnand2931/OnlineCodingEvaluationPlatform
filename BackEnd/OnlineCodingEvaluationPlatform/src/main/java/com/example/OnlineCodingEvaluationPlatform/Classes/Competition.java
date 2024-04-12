@@ -17,7 +17,7 @@ public class Competition{
     private List<Long> challenges;
     private int time_limit;
     private List<Long> students;
-    private int difficulty; // keep it from 1 to 5
+    private int difficulty; // keep it from 1 to 5 or avg of all challenges difficulty rating
     private Long created_by;
     private List<Long> leaderboard; // save it as a always sorted list of ids
 
