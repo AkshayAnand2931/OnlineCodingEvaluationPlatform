@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Submission Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container my-5">
+    <h1>Submission Details</h1>
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <th>Token:</th>
+            <td th:text="${result.token}"></td>
+        </tr>
+        <tr>
+            <th>Status ID:</th>
+            <td th:text="${result.status_id}"></td>
+        </tr>
+        <tr>
+            <th>Standard Output:</th>
+            <td>
+                <pre><code th:text="${result.stdout}"></code></pre>
+            </td>
+        </tr>
+        <tr>
+            <th>Standard Error:</th>
+            <td th:text="${result.stderr}"></td>
+        </tr>
+        <tr>
+            <th>Expected Output:</th>
+            <td th:text="${result.expected_output}"></td>
+        </tr>
+        <tr>
+            <th>Time:</th>
+            <td th:text="${result.time}"></td>
+        </tr>
+        <tr>
+            <th>Source Code:</th>
+            <td>
+                <pre><code th:text="${result.source_code}"></code></pre>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

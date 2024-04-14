@@ -32,15 +32,13 @@ public class Compiler {
         this.objectMapper = objectMapper;
     }
 
-    public CompletableFuture<String> compile(String sourceCode,String language, String input) {
+    public CompletableFuture<String> compile(String sourceCode,String language, String input, String expectedOutput) {
 
         Map<String,Object> requestBody = new HashMap<>();
         requestBody.put("language_id",getLanguageId(language));
-        System.out.println(getLanguageId(language));
         requestBody.put("source_code", Base64.getEncoder().encodeToString(sourceCode.getBytes()));
-        System.out.println(Base64.getEncoder().encodeToString(sourceCode.getBytes()));
         requestBody.put("stdin",Base64.getEncoder().encodeToString(input.getBytes()));
-        System.out.println(Base64.getEncoder().encodeToString(input.getBytes()));
+        requestBody.put("expected_output",Base64.getEncoder().encodeToString(expectedOutput.getBytes()));
 
 
         AsyncHttpClient client = new DefaultAsyncHttpClient();

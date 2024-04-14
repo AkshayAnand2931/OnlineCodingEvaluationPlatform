@@ -7,10 +7,12 @@ public class CompilationResult {
 
     private String token;
     private String status_id;
-    private String standard_output;
-    private String standard_error;
+    private String stdout;
+    private String stdin;
+    private String stderr;
+    private String expected_output;
     private double time;
-    private int memory;
+    private String source_code;
 
     public String getToken() {
         return token;
@@ -28,20 +30,20 @@ public class CompilationResult {
         this.status_id = status_id;
     }
 
-    public String getStandard_output() {
-        return standard_output;
+    public String getStdout() {
+        return stdout;
     }
 
-    public void setStandard_output(String standard_output) {
-        this.standard_output = standard_output;
+    public void setStdout(String stdout) {
+        this.stdout = stdout;
     }
 
-    public String getStandard_error() {
-        return standard_error;
+    public String getStderr() {
+        return stderr;
     }
 
-    public void setStandard_error(String standard_error) {
-        this.standard_error = standard_error;
+    public void setStderr(String stderr) {
+        this.stderr = stderr;
     }
 
     public double getTime() {
@@ -52,11 +54,27 @@ public class CompilationResult {
         this.time = time;
     }
 
-    public int getMemory() {
-        return memory;
+    public String getSource_code() {
+        return source_code;
     }
 
-    public void setMemory(int memory) {
-        this.memory = memory;
+    public void setSource_code(String source_code) {
+        this.source_code = source_code;
+    }
+
+    public String getStdin() {
+        return stdin;
+    }
+
+    public void setStdin(String stdin) {
+        this.stdin = stdin;
+    }
+
+    public String getExpected_output() {
+        return expected_output;
+    }
+
+    public void setExpected_output(String expected_output) {
+        this.expected_output = expected_output;
     }
 }
