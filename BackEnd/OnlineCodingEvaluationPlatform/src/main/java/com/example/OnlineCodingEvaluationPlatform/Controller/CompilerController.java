@@ -1,8 +1,13 @@
 package com.example.OnlineCodingEvaluationPlatform.Controller;
 
 
-import com.example.OnlineCodingEvaluationPlatform.Classes.*;
-import com.example.OnlineCodingEvaluationPlatform.Repository.SubmissionRepository;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +17,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
+import com.example.OnlineCodingEvaluationPlatform.Classes.Challenges;
+import com.example.OnlineCodingEvaluationPlatform.Classes.Code;
+import com.example.OnlineCodingEvaluationPlatform.Classes.CompilationResult;
+import com.example.OnlineCodingEvaluationPlatform.Classes.Compiler;
+import com.example.OnlineCodingEvaluationPlatform.Classes.Question;
+import com.example.OnlineCodingEvaluationPlatform.Classes.TestCase;
+import com.example.OnlineCodingEvaluationPlatform.Repository.SubmissionRepository;
 
 @Controller
 public class CompilerController {
@@ -30,11 +36,24 @@ public class CompilerController {
 
     @GetMapping("/compiler")
     public String showCompilerForm(Model model) {
-        model.addAttribute("compilationRequest", new CompilationRequest());
+        model.addAttribute("code", new Code());
+
+        Challenges challenge = new Challenges();
+
+
+        challenge.setDifficulty(1);
+        String s = String.join("\n"
+        , "a,b = [int(i) for i in input().split()]"
+        , "print(a+b)"
+        );
+        challenge.setIdeal_answer(s);
+
+
         Question question = new Question();
         question.setTitle("Sample question");
         question.setDescription("Write a program to add two numbers.");
-        model.addAttribute("question",question);
+        challenge.setQuestion(question);
+
 
         List<TestCase> testCases = new ArrayList<>();
         TestCase testcase1 = new TestCase();
@@ -47,12 +66,14 @@ public class CompilerController {
         testcase2.setExpectedOutput("30");
         testCases.add(testcase2);
 
-        model.addAttribute("testCases",testCases);
+        challenge.setTestCases(testCases);
+
+        model.addAttribute("challenge",challenge);
         return "compiler";
     }
 
     @PostMapping("/compiler/compile")
-    public String compileAndSaveSubmission(@ModelAttribute CompilationRequest compilationRequest, BindingResult bindingResult, Model model) {
+    public String compileAndSaveSubmission(@ModelAttribute Challenges challenge, @ModelAttribute Code code, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "compiler";
@@ -60,9 +81,11 @@ public class CompilerController {
 
         List<CompletableFuture<CompilationResult>> resultFutures = new ArrayList<>();
         List<String> allTokens = new ArrayList<>(); // Store all tokens for debugging
+        System.out.println(challenge);
+        System.out.println(code);
 
-        for (TestCase testCase : compilationRequest.getTestCases()) {
-            CompletableFuture<String> tokenFuture = compiler.compile(compilationRequest.getSourceCode(), compilationRequest.getLanguage(), testCase.getInput(), testCase.getExpectedOutput());
+        for (TestCase testCase : challenge.getTestCases()) {
+            CompletableFuture<String> tokenFuture = compiler.compile(code.getSourceCode(), code.getLanguage(), testCase.getInput(), testCase.getExpectedOutput());
             tokenFuture.thenAccept(token -> {
                 System.out.println("Token: " + token);
                 allTokens.add(token); // Add token to the list
@@ -85,7 +108,7 @@ public class CompilerController {
                 String sanitizedBase64 = stdinBase64.replaceAll("\\s", ""); // Remove all whitespace characters
                 byte[] decodedBytes = Base64.getDecoder().decode(sanitizedBase64);
                 String stdin = new String(decodedBytes, StandardCharsets.UTF_8);
-               result.setStdin(stdin);
+                result.setStdin(stdin);
             }
 
             String stdoutBase64 = result.getStdout();

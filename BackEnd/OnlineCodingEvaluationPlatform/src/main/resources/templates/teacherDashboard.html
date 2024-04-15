@@ -1,15 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Signup Success</title>
-  <link rel="stylesheet" th:href="@{/css/signupSuccessStyle.css}" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}" />
 </head>
 <body>
-  <div class="container">
-    <h2>Login Successful!</h2>
-    <p>You have successfully logged in as a teacher.</p>
-  </div>
+    <div class="container">
+        <h2>Select an Option:</h2>
+        <form action="#" method="post">
+            <!-- Teacher options -->
+            <div class="role-options" th:if="${userRole == 'teacher'}">
+                <div class="role-option">
+                    <input type="radio" id="hostedCompetitions" name="option" value="hostedCompetitions">
+                    <label for="hostedCompetitions">View Competitions</label>
+                </div>
+                <div class="role-option">
+                    <input type="radio" id="createCompetition" name="option" value="createCompetition">
+                    <label for="createCompetition">Create Competition</label>
+                </div>
+                <div class="role-option">
+                    <input type="radio" id="currentChallenges" name="option" value="currentChallenges">
+                    <label for="currentChallenges">View Challenges</label>
+                </div>
+                <div class="role-option">
+                    <input type="radio" id="createChallenge" name="option" value="createChallenge">
+                    <label for="createChallenge">Create Challenge</label>
+                </div>
+            </div>
+            <!-- Student options -->
+            <div class="role-options" th:if="${userRole != 'teacher'}">
+                <div class="role-option">
+                    <input type="radio" id="hostedCompetitions" name="option" value="hostedCompetitions">
+                    <label for="hostedCompetitions">View Competitions</label>
+                </div>
+                <div class="role-option">
+                    <input type="radio" id="currentChallenges" name="option" value="currentChallenges">
+                    <label for="currentChallenges">View Challenges</label>
+                </div>
+            </div>
+            <button class="submit-button" type="submit">Submit</button>
+        </form>
+    </div>
 </body>
 </html>

@@ -1,8 +1,5 @@
 package com.example.OnlineCodingEvaluationPlatform.Classes;
 
-import jakarta.persistence.Embeddable;
-
-@Embeddable
 public class TestCase {
     private String input;
     private String expectedOutput;

@@ -1,8 +1,8 @@
 package com.example.OnlineCodingEvaluationPlatform.Classes;
 
 import java.util.List;
-import java.util.Map;
 
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,8 +15,19 @@ public class Challenges{
     private Long challenge_id;
     private int difficulty; // keep this 1 to 5
     private String ideal_answer;
-    private List<String> tests;
 
+    @Convert(converter = QuestionConverter.class)
+    private Question question;
+
+    @Convert(converter = TestCaseConverter.class)
+    private List<TestCase> testCases;
+
+    public Question getQuestion() {
+        return question;
+    }
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
     public void setChallenge_id(Long challenge_id){
         this.challenge_id = challenge_id;
     }
@@ -35,10 +46,16 @@ public class Challenges{
     public String getIdeal_answer(){
         return this.ideal_answer;
     }
-    public void setTests(List<String> tests){
-        this.tests = tests;
+    public List<TestCase> getTestCases() {
+        return testCases;
     }
-    public List<String> getTests(){
-        return this.tests;
+    public void setTestCases(List<TestCase> testCases) {
+        this.testCases = testCases;
     }
+    @Override
+    public String toString() {
+        return "Challenges [challenge_id=" + challenge_id + ", difficulty=" + difficulty + ", ideal_answer="
+                + ideal_answer + ", question=" + question + ", testCases=" + testCases + "]";
+    }
+
 }

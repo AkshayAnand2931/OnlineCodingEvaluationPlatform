@@ -1,11 +1,8 @@
 package com.example.OnlineCodingEvaluationPlatform.Classes;
 
-import java.util.List;
-
-public class CompilationRequest {
+public class Code {
     private String language;
     private String sourceCode;
-    private List<TestCase> testCases;
 
     public String getLanguage() {
         return language;
@@ -23,11 +20,9 @@ public class CompilationRequest {
         this.sourceCode = sourceCode;
     }
 
-    public List<TestCase> getTestCases() {
-        return testCases;
+    @Override
+    public String toString() {
+        return "Code [language=" + language + ", sourceCode=" + sourceCode + "]";
     }
 
-    public void setTestCases(List<TestCase> testCases) {
-        this.testCases = testCases;
-    }
 }

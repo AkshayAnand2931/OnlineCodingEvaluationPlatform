@@ -9,16 +9,16 @@
 <div class="container my-5">
     <h1>Code Compiler</h1>
     <!-- Display the question details -->
-    <h2 th:text="${question.title}"></h2>
-    <p th:text="${question.description}"></p>
+    <h2 th:text="${challenge.question.title}"></h2>
+    <p th:text="${challenge.question.description}"></p>
 
     <!-- Language choice and source code input fields -->
     <form th:action="@{/compiler/compile}" method="post">
-        <input type="hidden" th:each="testCase, iter : ${testCases}" th:name="'testCases[' + ${iter.index} + '].input'" th:value="${testCase.input}" />
-        <input type="hidden" th:each="testCase, iter : ${testCases}" th:name="'testCases[' + ${iter.index} + '].expectedOutput'" th:value="${testCase.expectedOutput}" />
+        <input type="hidden" th:each="testCase, iter : ${challenge.testCases}" th:field="*{challenge.testCases[__${iter.index}__].input}"/>
+        <input type="hidden" th:each="testCase, iter : ${challenge.testCases}" th:field="*{challenge.testCases[__${iter.index}__].expectedOutput}"/>
         <div class="form-group">
             <label for="language">Language</label>
-            <select class="form-control" id="language" name="language">
+            <select class="form-control" id="language" th:field="*{code.language}">
                 <option value="c">C</option>
                 <option value="java">Java</option>
                 <option value="cpp">C++</option>
@@ -27,18 +27,18 @@
         </div>
         <div class="form-group">
             <label for="sourceCode">Source Code</label>
-            <textarea class="form-control" id="sourceCode" name="sourceCode" rows="10"></textarea>
+            <textarea class="form-control" id="sourceCode"th:field="*{code.sourceCode}" rows="10"></textarea>
         </div>
 
         <!-- Display the test cases -->
         <h2>Test Cases</h2>
-        <div class="form-group" th:each="testCase, iter : ${testCases}">
+        <div class="form-group" th:each="testCase, iter : ${challenge.testCases}">
             <label th:for="|input${iter.index}|">Input</label>
             <textarea class="form-control" th:id="|input${iter.index}|" rows="3" th:text="${testCase.input}" readonly></textarea>
             <label th:for="|expected${iter.index}|">Expected Output</label>
             <textarea class="form-control" th:id="|expected${iter.index}|" rows="3" th:text="${testCase.expectedOutput}" readonly></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-success">Submit</button>
     </form>
 </div>
 </body>
