@@ -18,6 +18,9 @@
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>
       </div>
+      <div>
+        <p>Don't have an account? <a href="/teachersignup">Sign in</a></p>
+      </div>
       <button type="submit" class="submit-button">Login</button>
       <div th:if="${error}">
         <p style="color: red;" th:text="${error}"></p>

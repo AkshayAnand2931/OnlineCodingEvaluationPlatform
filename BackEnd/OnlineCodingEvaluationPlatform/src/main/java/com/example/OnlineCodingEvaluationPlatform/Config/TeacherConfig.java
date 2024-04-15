@@ -14,7 +14,7 @@ import com.example.OnlineCodingEvaluationPlatform.Repository.TeacherRepository;
 public class TeacherConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(TeacherRepository repository){
+    CommandLineRunner commandLineRunner2(TeacherRepository repository){
         return args -> {
             Teacher r1 = new Teacher(1L,
             "user1",

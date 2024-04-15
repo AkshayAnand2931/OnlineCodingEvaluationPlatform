@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.OnlineCodingEvaluationPlatform.Classes.PasswordEncoder;
 import com.example.OnlineCodingEvaluationPlatform.Classes.Teacher;
 import com.example.OnlineCodingEvaluationPlatform.Service.TeacherService;
+
 
 
 @Controller
@@ -38,7 +40,7 @@ public class TeacherController {
         Teacher teacher = teacherservice.findByUsername(username);
         if (teacher != null && PasswordEncoder.checkPassword(password, teacher.getPassword())) {
             // Password matches, login successful
-            return "redirect:/teacherDashboard"; // Currently a placeholder
+            return "redirect:/Dashboard"; // Currently a placeholder
         } else {
             // Password does not match, login failed
             redirectAttributes.addFlashAttribute("error", "Invalid username or password");
@@ -76,8 +78,17 @@ public class TeacherController {
     }
 
 
-    @GetMapping("/teacherDashboard")
-    public String teacherDashboard(){
-        return "teacherDashboard";
+    @GetMapping("/Dashboard")
+    public String Dashboard(Model model){
+        
+        model.addAttribute("userRole", new String("teacher"));
+        return "Dashboard";
     }
+
+    @PostMapping("/Dashboard")
+    public String choose_option(@RequestParam("option") String option) {
+
+        return "redirect:/" + option;
+    }
+    
 }

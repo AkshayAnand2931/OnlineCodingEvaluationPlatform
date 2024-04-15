@@ -17,6 +17,7 @@
       <th scope="col">Standard Error</th>
       <th scope="col">Expected Output</th>
       <th scope="col">Time</th>
+      <th scope="col"></th> <!-- Added column for the "View more" button -->
     </tr>
     </thead>
     <tbody>
@@ -27,9 +28,23 @@
       <td th:text="${result.stderr}"></td>
       <td th:text="${result.expected_output}"></td>
       <td th:text="${result.time}"></td>
+      <td>
+        <form th:action="@{'/compiler/submission/' + ${result.token}}">
+          <button type="submit" class="btn btn-success">View more</button>
+        </form>
+      </td>
     </tr>
     </tbody>
   </table>
+
+  <div th:if="${success}" class="text-success d-flex flex-column align-items-center">
+    <img src="/green_tick.png" alt="Green Tick" class="img-fluid mb-2" style="max-width: 100px;">
+    <p class="mb-0">Success!</p>
+  </div>
+  <div th:if="${not success}" class="text-danger d-flex flex-column align-items-center">
+    <img src="/red_x.png" alt="Red X" class="img-fluid mb-2" style="max-width: 100px;">
+    <p class="mb-0">Oops, try again</p>
+  </div>
 </div>
 </body>
 </html>

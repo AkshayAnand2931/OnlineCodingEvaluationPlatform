@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Challenges</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1>Challenges</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div th:each="challenge : ${challenges}" class="card mb-3">
+                <div class="card-body">
+                    <form th:action="@{/submitChallenge}" method="post">
+                        <input type="hidden" name="challengeId" th:value="${challenge.challenge_id}">
+                        <button type="submit" class="btn btn-link" style="text-decoration: none;">
+                            <h5 class="card-title" th:text="${challenge.question.title}"></h5>
+                        </button>
+                        <p class="card-text">Difficulty: <span th:text="${challenge.difficulty}"></span></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
@@ -21,8 +22,8 @@ import com.example.OnlineCodingEvaluationPlatform.Classes.Challenges;
 import com.example.OnlineCodingEvaluationPlatform.Classes.Code;
 import com.example.OnlineCodingEvaluationPlatform.Classes.CompilationResult;
 import com.example.OnlineCodingEvaluationPlatform.Classes.Compiler;
-import com.example.OnlineCodingEvaluationPlatform.Classes.Question;
 import com.example.OnlineCodingEvaluationPlatform.Classes.TestCase;
+import com.example.OnlineCodingEvaluationPlatform.Repository.ChallengesRepository;
 import com.example.OnlineCodingEvaluationPlatform.Repository.SubmissionRepository;
 
 @Controller
@@ -34,41 +35,22 @@ public class CompilerController {
     @Autowired
     private SubmissionRepository submissionRepository;
 
-    @GetMapping("/compiler")
-    public String showCompilerForm(Model model) {
+    @Autowired
+    private ChallengesRepository challengesRepository;
+
+    @GetMapping("/compiler/{challengeId}")
+    public String showCompilerForm(@PathVariable Long challengeId, Model model) {
         model.addAttribute("code", new Code());
 
-        Challenges challenge = new Challenges();
+        //get challenge from sql
+        Optional<Challenges> optionalChallenges = challengesRepository.findById(challengeId);
 
+        Challenges challenge = null;
+        if (optionalChallenges.isPresent()) {
+            challenge = optionalChallenges.get();
+        }
 
-        challenge.setDifficulty(1);
-        String s = String.join("\n"
-        , "a,b = [int(i) for i in input().split()]"
-        , "print(a+b)"
-        );
-        challenge.setIdeal_answer(s);
-
-
-        Question question = new Question();
-        question.setTitle("Sample question");
-        question.setDescription("Write a program to add two numbers.");
-        challenge.setQuestion(question);
-
-
-        List<TestCase> testCases = new ArrayList<>();
-        TestCase testcase1 = new TestCase();
-        testcase1.setInput("2 3");
-        testcase1.setExpectedOutput("5");
-        testCases.add(testcase1);
-
-        TestCase testcase2 = new TestCase();
-        testcase2.setInput("10 20");
-        testcase2.setExpectedOutput("30");
-        testCases.add(testcase2);
-
-        challenge.setTestCases(testCases);
-
-        model.addAttribute("challenge",challenge);
+        model.addAttribute("challenge", challenge);
         return "compiler";
     }
 
@@ -112,6 +94,8 @@ public class CompilerController {
                 .map(CompletableFuture::join)
                 .collect(Collectors.toList());
 
+        boolean final_result = true;
+
         for(CompilationResult result: compilationResults){
 
             String stdinBase64 = result.getStdin();
@@ -123,9 +107,14 @@ public class CompilerController {
             result.setStdout(convertfrom64String(stdoutBase64));
             result.setExpected_output(convertfrom64String(expectedOutputBase64));
             result.setStderr(convertfrom64String(stderrCodeBase64));
+            if (!convertfrom64String(stdoutBase64).trim().equals(convertfrom64String(expectedOutputBase64).trim())){
+                System.out.println(convertfrom64String(stdoutBase64) + ": "+ convertfrom64String(expectedOutputBase64));
+                final_result = false;
+            }
 
         }
         model.addAttribute("results", compilationResults);
+        model.addAttribute("success", final_result);
 
         // Print all tokens
         System.out.println("All Tokens: " + allTokens);

@@ -10,20 +10,20 @@
 <body>
     <div class="container">
         <h2>Select an Option:</h2>
-        <form action="#" method="post">
+        <form action="/Dashboard" method="post">
             <!-- Teacher options -->
             <div class="role-options" th:if="${userRole == 'teacher'}">
                 <div class="role-option">
-                    <input type="radio" id="hostedCompetitions" name="option" value="hostedCompetitions">
-                    <label for="hostedCompetitions">View Competitions</label>
+                    <input type="radio" id="viewCompetitions" name="option" value="viewCompetitions">
+                    <label for="viewCompetitions">View Competitions</label>
                 </div>
                 <div class="role-option">
                     <input type="radio" id="createCompetition" name="option" value="createCompetition">
                     <label for="createCompetition">Create Competition</label>
                 </div>
                 <div class="role-option">
-                    <input type="radio" id="currentChallenges" name="option" value="currentChallenges">
-                    <label for="currentChallenges">View Challenges</label>
+                    <input type="radio" id="viewChallenges" name="option" value="viewChallenges">
+                    <label for="viewChallenges">View Challenges</label>
                 </div>
                 <div class="role-option">
                     <input type="radio" id="createChallenge" name="option" value="createChallenge">
@@ -33,12 +33,12 @@
             <!-- Student options -->
             <div class="role-options" th:if="${userRole != 'teacher'}">
                 <div class="role-option">
-                    <input type="radio" id="hostedCompetitions" name="option" value="hostedCompetitions">
-                    <label for="hostedCompetitions">View Competitions</label>
+                    <input type="radio" id="viewCompetitions" name="option" value="viewCompetitions">
+                    <label for="viewCompetitions">View Competitions</label>
                 </div>
                 <div class="role-option">
-                    <input type="radio" id="currentChallenges" name="option" value="currentChallenges">
-                    <label for="currentChallenges">View Challenges</label>
+                    <input type="radio" id="viewChallenges" name="option" value="viewChallenges">
+                    <label for="viewChallenges">View Challenges</label>
                 </div>
             </div>
             <button class="submit-button" type="submit">Submit</button>
