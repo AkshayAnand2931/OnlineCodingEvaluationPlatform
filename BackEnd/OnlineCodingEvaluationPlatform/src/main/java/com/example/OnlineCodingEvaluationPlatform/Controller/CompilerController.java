@@ -72,6 +72,16 @@ public class CompilerController {
         return "compiler";
     }
 
+    private String convertfrom64String(String string64){
+        if (string64 != null) {
+            String sanitizedBase64 = string64.replaceAll("\\s", ""); // Remove all whitespace characters
+            byte[] decodedBytes = Base64.getDecoder().decode(sanitizedBase64);
+            String string = new String(decodedBytes, StandardCharsets.UTF_8);
+            return string;
+        }
+        return string64;
+    }
+
     @PostMapping("/compiler/compile")
     public String compileAndSaveSubmission(@ModelAttribute Challenges challenge, @ModelAttribute Code code, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
@@ -103,37 +113,17 @@ public class CompilerController {
                 .collect(Collectors.toList());
 
         for(CompilationResult result: compilationResults){
+
             String stdinBase64 = result.getStdin();
-            if (stdinBase64 != null) {
-                String sanitizedBase64 = stdinBase64.replaceAll("\\s", ""); // Remove all whitespace characters
-                byte[] decodedBytes = Base64.getDecoder().decode(sanitizedBase64);
-                String stdin = new String(decodedBytes, StandardCharsets.UTF_8);
-                result.setStdin(stdin);
-            }
-
             String stdoutBase64 = result.getStdout();
-            if (stdoutBase64!= null) {
-                String sanitizedBase64 = stdoutBase64.replaceAll("\\s", ""); // Remove all whitespace characters
-                byte[] decodedBytes = Base64.getDecoder().decode(sanitizedBase64);
-                String stdout = new String(decodedBytes, StandardCharsets.UTF_8);
-                result.setStdout(stdout);
-            }
-
             String expectedOutputBase64 = result.getExpected_output();
-            if (expectedOutputBase64 != null) {
-                String sanitizedBase64 = expectedOutputBase64.replaceAll("\\s", ""); // Remove all whitespace characters
-                byte[] decodedBytes = Base64.getDecoder().decode(sanitizedBase64);
-                String expected_output = new String(decodedBytes, StandardCharsets.UTF_8);
-                result.setExpected_output(expected_output);
-            }
-
             String stderrCodeBase64 = result.getStderr();
-            if (stderrCodeBase64 != null) {
-                String sanitizedBase64 = stderrCodeBase64.replaceAll("\\s", ""); // Remove all whitespace characters
-                byte[] decodedBytes = Base64.getDecoder().decode(sanitizedBase64);
-                String stderr = new String(decodedBytes, StandardCharsets.UTF_8);
-                result.setStderr(stderr);
-            }
+
+            result.setStdin(convertfrom64String(stdinBase64));
+            result.setStdout(convertfrom64String(stdoutBase64));
+            result.setExpected_output(convertfrom64String(expectedOutputBase64));
+            result.setStderr(convertfrom64String(stderrCodeBase64));
+
         }
         model.addAttribute("results", compilationResults);
 
@@ -149,46 +139,19 @@ public class CompilerController {
         CompletableFuture<CompilationResult> result = compiler.getSubmission(submissionToken);
         CompilationResult compilationResult = result.join();
 
-
         String sourceCodeBase64 = compilationResult.getSource_code();
-        if (sourceCodeBase64 != null) {
-            String sanitizedBase64 = sourceCodeBase64.replaceAll("\\s", ""); // Remove all whitespace characters
-            byte[] decodedBytes = Base64.getDecoder().decode(sanitizedBase64);
-            String sourceCode = new String(decodedBytes, StandardCharsets.UTF_8);
-            compilationResult.setSource_code(sourceCode);
-        }
-
         String stdinBase64 = compilationResult.getStdin();
-        if (stdinBase64 != null) {
-            String sanitizedBase64 = stdinBase64.replaceAll("\\s", ""); // Remove all whitespace characters
-            byte[] decodedBytes = Base64.getDecoder().decode(sanitizedBase64);
-            String stdin = new String(decodedBytes, StandardCharsets.UTF_8);
-            compilationResult.setStdin(stdin);
-        }
-
         String stdoutBase64 = compilationResult.getStdout();
-        if (stdoutBase64!= null) {
-            String sanitizedBase64 = stdoutBase64.replaceAll("\\s", ""); // Remove all whitespace characters
-            byte[] decodedBytes = Base64.getDecoder().decode(sanitizedBase64);
-            String stdout = new String(decodedBytes, StandardCharsets.UTF_8);
-            compilationResult.setStdout(stdout);
-        }
-
         String expectedOutputBase64 = compilationResult.getExpected_output();
-        if (expectedOutputBase64 != null) {
-            String sanitizedBase64 = expectedOutputBase64.replaceAll("\\s", ""); // Remove all whitespace characters
-            byte[] decodedBytes = Base64.getDecoder().decode(sanitizedBase64);
-            String expected_output = new String(decodedBytes, StandardCharsets.UTF_8);
-            compilationResult.setExpected_output(expected_output);
-        }
-
         String stderrCodeBase64 = compilationResult.getStderr();
-        if (stderrCodeBase64 != null) {
-            String sanitizedBase64 = stderrCodeBase64.replaceAll("\\s", ""); // Remove all whitespace characters
-            byte[] decodedBytes = Base64.getDecoder().decode(sanitizedBase64);
-            String stderr = new String(decodedBytes, StandardCharsets.UTF_8);
-            compilationResult.setStderr(stderr);
-        }
+
+        compilationResult.setSource_code(convertfrom64String(sourceCodeBase64));
+        compilationResult.setStdin(convertfrom64String(stdinBase64));
+        compilationResult.setStdout(convertfrom64String(stdoutBase64));
+        compilationResult.setExpected_output(convertfrom64String(expectedOutputBase64));
+        compilationResult.setStderr(convertfrom64String(stderrCodeBase64));
+
+        
 
         model.addAttribute("result", compilationResult);
         return "submission";
