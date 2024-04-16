@@ -1,6 +1,8 @@
 package com.example.OnlineCodingEvaluationPlatform.Controller;
 
 import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,5 +48,23 @@ public class CompetitionController{
         }
         model.addAttribute("competition", competition);
         return "redirect:/viewCompetitions/"+id;
+    }
+    
+    @PostMapping("/createCompetition")
+    public String createCompMethod(@RequestParam("title") String title, @RequestParam("challenges") String challenges, @RequestParam("time_limit") int time_limit, @RequestParam("difficulty") int difficulty, RedirectAttributes redirectAttributes, Model model){
+        List<Long> l = new ArrayList<Long>();
+        String[] k = challenges.split(",");
+        List<Long> challenge_id = new ArrayList<Long>();
+        for(String i:k){
+            challenge_id.add(Long.parseLong(i));
+        }
+        Competition c = new Competition(title, challenge_id, time_limit, difficulty, 5L, l);
+        competitionRepository.save(c);
+        return "redirect:/viewCompetitions";
+    }
+
+    @GetMapping("/createCompetition")
+    public String createCompPage(RedirectAttributes redirectAttributes, Model model){
+        return "createCompetition";
     }
 }

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Competition</title>
+  <link rel="stylesheet" th:href="@{/css/studentsignup.css}" />
+</head>
+<body>
+  <div class="container">
+    <h2>Student Login</h2>
+    <form action="/createCompetition" method="POST">
+        <div class="form-group">
+            <label for="title">Competition Title: </label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+        <label for="challenges">Challenge IDs (seperated by commas): </label>
+        <input type="textarea" id="challenges" name="challenges" required>
+      </div>
+      <div class="form-group">
+        <label for="difficulty">Difficulty:</label>
+        <input type="number" id="difficulty" name="difficulty" required>
+      </div>
+      <div class="form-group">
+        <label for="time_limit">Time Limit:</label>
+        <input type="number" id="time_limit" name="time_limit" required>
+      </div>
+      <button type="submit" class="submit-button">Create</button>
+      <div th:if="${error}">
+        <p style="color: red;" th:text="${error}"></p>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

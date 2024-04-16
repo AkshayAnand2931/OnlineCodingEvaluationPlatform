@@ -28,11 +28,12 @@ public class Competition{
     public Competition(){
 
     }
-    public Competition(Long id, List<Long> challenges, int time_limit, List<Long> students, int difficulty, Long created_by, List<Long> leaderboard){
-        this.id = id;
+    public Competition(String name, List<Long> challenges, int time_limit, int difficulty, Long created_by, List<Long> leaderboard){
+        //this.id = id;
+        this.name=name;
         this.challenges = challenges;
         this.time_limit = time_limit;
-        this.students = students;
+        //this.students = students;
         this.difficulty = difficulty;
         this.created_by = created_by;
         this.leaderboard = leaderboard;
