@@ -1,14 +1,9 @@
 package com.example.OnlineCodingEvaluationPlatform.Controller;
 
 
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
-
+import com.example.OnlineCodingEvaluationPlatform.Classes.*;
+import com.example.OnlineCodingEvaluationPlatform.Repository.ChallengesRepository;
+import com.example.OnlineCodingEvaluationPlatform.Repository.SubmissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +13,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.OnlineCodingEvaluationPlatform.Classes.Challenges;
-import com.example.OnlineCodingEvaluationPlatform.Classes.Code;
-import com.example.OnlineCodingEvaluationPlatform.Classes.CompilationResult;
-import com.example.OnlineCodingEvaluationPlatform.Classes.Compiler;
-import com.example.OnlineCodingEvaluationPlatform.Classes.TestCase;
-import com.example.OnlineCodingEvaluationPlatform.Repository.ChallengesRepository;
-import com.example.OnlineCodingEvaluationPlatform.Repository.SubmissionRepository;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 @Controller
 public class CompilerController {
@@ -102,12 +97,22 @@ public class CompilerController {
             String stdoutBase64 = result.getStdout();
             String expectedOutputBase64 = result.getExpected_output();
             String stderrCodeBase64 = result.getStderr();
+            String compile_outputBase64 = result.getCompile_output();
 
             result.setStdin(convertfrom64String(stdinBase64));
             result.setStdout(convertfrom64String(stdoutBase64));
             result.setExpected_output(convertfrom64String(expectedOutputBase64));
-            result.setStderr(convertfrom64String(stderrCodeBase64));
-            if (!convertfrom64String(stdoutBase64).trim().equals(convertfrom64String(expectedOutputBase64).trim())){
+            if(stderrCodeBase64 == null){
+                result.setStderr(convertfrom64String(compile_outputBase64));
+            }
+            else{
+                result.setStderr(convertfrom64String(stderrCodeBase64));
+            }
+
+            if(stdoutBase64 == null){
+                final_result = false;
+            }
+            else if (!convertfrom64String(stdoutBase64).trim().equals(convertfrom64String(expectedOutputBase64).trim())){
                 System.out.println(convertfrom64String(stdoutBase64) + ": "+ convertfrom64String(expectedOutputBase64));
                 final_result = false;
             }

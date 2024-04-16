@@ -13,6 +13,7 @@ public class CompilationResult {
     private String expected_output;
     private double time;
     private String source_code;
+    private String compile_output;
 
     public String getToken() {
         return token;
@@ -76,5 +77,13 @@ public class CompilationResult {
 
     public void setExpected_output(String expected_output) {
         this.expected_output = expected_output;
+    }
+
+    public String getCompile_output() {
+        return compile_output;
+    }
+
+    public void setCompile_output(String compile_output) {
+        this.compile_output = compile_output;
     }
 }
