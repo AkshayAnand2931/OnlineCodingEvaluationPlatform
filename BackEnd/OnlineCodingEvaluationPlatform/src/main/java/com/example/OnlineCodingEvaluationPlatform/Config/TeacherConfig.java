@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 import com.example.OnlineCodingEvaluationPlatform.Classes.Teacher;
 import com.example.OnlineCodingEvaluationPlatform.Repository.TeacherRepository;
 
 
 @Configuration
+@Order(1)
 public class TeacherConfig {
 
     @Bean

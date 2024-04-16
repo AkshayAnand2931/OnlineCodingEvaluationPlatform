@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Competition Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container my-5">
+    <h1>Competition Details</h1>
+    <table class="table table-bordered">
+        <tbody>
+        <tr>
+            <th>Competition ID:</th>
+            <td th:text="${competition.id}"></td>
+        </tr>
+        <tr>
+            <th>Name:</th>
+            <td th:text="${competition.name}"></td>
+        </tr>
+        <tr>
+            <th>Challenges:</th>
+            <td>
+                <ul>
+                    <li th:each="challenge : ${competition.challenges}" th:text="${challenge}"></li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <th>Time Limit:</th>
+            <td th:text="${competition.time_limit}"></td>
+        </tr>
+        <tr>
+            <th>Students:</th>
+            <td>
+                <ul>
+                    <li th:each="student : ${competition.students}" th:text="${student}"></li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <th>Difficulty:</th>
+            <td th:text="${competition.difficulty}"></td>
+        </tr>
+        <tr>
+            <th>Created By:</th>
+            <td th:text="${competition.created_by}"></td>
+        </tr>
+        <tr>
+            <th>Leaderboard:</th>
+            <td>
+                <ul>
+                    <li th:each="entry : ${competition.leaderboard}" th:text="${entry}"></li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
