@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Certification</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+        }
+        .btn-primary {
+            width: 100%;
+            margin-top: 20px;
+        }
+        #confirmationMessage {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center mb-4">Certification</h1>
+    <h2>Completed Challenges</h2>
+    <ul>
+        <li th:each="challenge : ${completedChallenges}" th:text="${challenge.title}"></li>
+    </ul>
+    <button type="button" class="btn btn-primary" onclick="generateCertificate()">Get Certificate</button>
+    
+    <!-- Confirmation message -->
+    <div id="confirmationMessage">
+        <h3 class="text-success">Congratulations! You have successfully completed the certification.</h3>
+        <p>Your certificate will be emailed to you shortly.</p>
+    </div>
+</div>
+
+<script>
+    function generateCertificate() {
+        // Perform AJAX request to the server to generate the certificate
+        // Once the request is successful, display the confirmation message
+        // For demonstration purpose, let's show the confirmation message immediately
+        document.getElementById("confirmationMessage").style.display = "block";
+    }
+</script>
+
+</body>
+</html>
