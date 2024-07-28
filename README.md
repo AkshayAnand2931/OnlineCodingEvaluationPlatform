@@ -1,4 +1,5 @@
-Create an online coding evaluation platform
-Similar to Hackerrank
+# Online Coding Evaluation Platform
 
-For project for course OOAD with Java.
+This repository is for a team project for the university course **Object Oriented Analysis and Design with Java**.
+The project was to create an online coding evaluation platform similar to Hackerrank.
+The project was built using Java SpringBoot.
